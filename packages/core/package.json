@@ -1,6 +1,6 @@
 {
-  "name": "@canary/core",
-  "version": "0.0.1",
+  "name": "@canary-flags/core",
+  "version": "1.0.0-alpha.0",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

@@ -1373,18 +1373,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@canary/core@workspace:packages/core":
+"@canary-flags/core@workspace:packages/core":
   version: 0.0.0-use.local
-  resolution: "@canary/core@workspace:packages/core"
+  resolution: "@canary-flags/core@workspace:packages/core"
   dependencies:
     eventemitter3: "npm:4.0.7"
     radashi: "npm:^12.6.0"
   languageName: unknown
   linkType: soft
 
-"@canary/source@workspace:.":
+"@canary-flags/source@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@canary/source@workspace:."
+  resolution: "@canary-flags/source@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.32.0"
     "@nx/eslint": "npm:21.3.7"
