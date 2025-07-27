@@ -71,6 +71,9 @@
   },
   "release": {
     "releaseTagPatternStrictPreid": true,
+    "version": {
+      "conventionalCommits": true
+    },
     "changelog": {
       "projectChangelogs": {
         "renderOptions": {

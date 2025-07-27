@@ -2,6 +2,7 @@
   "name": "@canary-flags/source",
   "version": "0.0.0",
   "license": "MIT",
+  "repository": "https://github.com/jakerichan/canary-flags",
   "private": true,
   "dependencies": {
     "@stylistic/eslint-plugin": "^5.2.2",
