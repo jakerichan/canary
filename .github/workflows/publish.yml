@@ -1,0 +1,28 @@
+name: publish
+
+# Add manual trigger
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write #allows to push commits to the repo
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: tree:0
+          fetch-depth: 0
+      - name: Install asdf & tools
+        uses: asdf-vm/actions/install@v4
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Release a new package
+        run: yarn nx release --dry-run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

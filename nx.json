@@ -84,6 +84,7 @@
         }
       },
       "workspaceChangelog": {
+        "createRelease": "github",
         "renderOptions": {
           "authors": true,
           "commitReferences": true,

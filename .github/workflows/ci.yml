@@ -33,12 +33,13 @@ jobs:
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: yarn nx-cloud record -- echo Hello World
       - run: yarn nx run-many -t lint test build
-      - name: Release
-        if: ${{ success() && (github.event_name != 'pull_request' || (github.event.action == 'closed' && github.event.pull_request.merged == true) || github.ref == 'refs/heads/next') }}
-        env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          yarn nx release
+      # - name: Release
+      #   if: ${{ success() && (github.event_name != 'pull_request' || (github.event.action == 'closed' && github.event.pull_request.merged == true) || github.ref == 'refs/heads/next') }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: |
+      #     yarn nx release
 
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
       - run: yarn nx fix-ci
