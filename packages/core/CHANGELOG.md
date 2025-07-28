@@ -1,3 +1,7 @@
+## 1.0.0-alpha.6 (2025-07-28)
+
+This was a version bump only for @canary-flags/core to align it with other projects, there were no code changes.
+
 ## 1.0.0-alpha.5 (2025-07-28)
 
 ### 🩹 Fixes
