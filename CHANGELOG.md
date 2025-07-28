@@ -1,3 +1,13 @@
+## 1.0.0-alpha.5 (2025-07-28)
+
+### 🩹 Fixes
+
+- **ci:** split publish into separate step ([624ba7e](https://github.com/jakerichan/canary/commit/624ba7e))
+
+### ❤️ Thank You
+
+- Jacob Richan @jakerichan
+
 ## 1.0.0-alpha.4 (2025-07-28)
 
 ### 🩹 Fixes
