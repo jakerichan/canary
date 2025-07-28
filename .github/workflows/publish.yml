@@ -1,4 +1,4 @@
-name: publish
+name: Release
 
 # Add manual trigger
 on:
@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write #allows to push commits to the repo
+      id-token: write # needed for provenance data generation
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,8 +27,17 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Release a new package
-        run: yarn nx release --yes
+      - name: Create a new release
+        run: yarn nx release --skip-publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Print Environment Info
+        run: npx nx report
+        shell: bash
+
+      - name: Publish the release
+        run: yarn nx release publish
+        env:
+          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
