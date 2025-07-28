@@ -1,3 +1,13 @@
+## 1.0.0-alpha.4 (2025-07-28)
+
+### 🩹 Fixes
+
+- **ci:** add yes option to release script ([e26bd2a](https://github.com/jakerichan/canary/commit/e26bd2a))
+
+### ❤️ Thank You
+
+- Jacob Richan @jakerichan
+
 ## 1.0.0-alpha.3 (2025-07-28)
 
 ### 🚀 Features
