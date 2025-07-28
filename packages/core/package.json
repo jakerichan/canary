@@ -3,9 +3,7 @@
   "version": "1.0.0-alpha.7",
   "type": "module",
   "publishConfig": {
-    "access": "public",
-    "provenance": true,
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

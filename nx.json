@@ -67,13 +67,19 @@
       "dependsOn": [
         "^build"
       ]
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ]
     }
   },
   "release": {
     "releaseTagPatternStrictPreid": true,
     "version": {
       "conventionalCommits": true,
-      "fallbackCurrentVersionResolver": "disk"
+      "fallbackCurrentVersionResolver": "disk",
+      "preVersionCommand": "npx nx affected -t build"
     },
     "changelog": {
       "projectChangelogs": {
