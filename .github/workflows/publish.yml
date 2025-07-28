@@ -22,7 +22,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Release a new package
-        run: yarn nx release --dry-run
+        run: yarn nx release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
