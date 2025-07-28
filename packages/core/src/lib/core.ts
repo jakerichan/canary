@@ -4,12 +4,16 @@ import type {
   CanaryStoreEntry,
   CanaryValue,
   Overrides,
+  CanaryConfig,
 } from './types'
 
+const isKeyValueArray = (canaryConfig: CanaryConfig): canaryConfig is Array<[string, CanaryStoreEntry]> => {
+  return Array.isArray(canaryConfig[0]) && typeof canaryConfig[0][0] === 'string'
+}
 class CanaryCore extends EventEmitter {
-  constructor(configArray?: Array<CanaryStoreEntry>, overrides?: Overrides) {
+  constructor(canaryConfig?: CanaryConfig, overrides?: Overrides) {
     super()
-    if (configArray) this.initializeConfig(configArray)
+    if (canaryConfig) this.initializeConfig(canaryConfig)
     if (overrides) this.overrideValues(overrides)
   }
 
@@ -103,8 +107,14 @@ class CanaryCore extends EventEmitter {
     return this
   }
 
-  public initializeConfig = (configArray: Array<CanaryStoreEntry>): CanaryCore => {
-    configArray.forEach((entry) => {
+  public initializeConfig = (canaryConfig: CanaryConfig): CanaryCore => {
+    if (isKeyValueArray(canaryConfig)) {
+      const newConfig = new Map(canaryConfig)
+      this.features = new Map([...this.features, ...newConfig])
+      return this
+    }
+
+    canaryConfig.forEach((entry) => {
       this.config(entry.name, entry)
     })
     return this

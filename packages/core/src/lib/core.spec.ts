@@ -73,6 +73,21 @@ describe('CanaryCore', () => {
       })
     })
 
+    it('should set a feature configuration with a key-value array', () => {
+      const entry: CanaryStoreEntry = {
+        name: 'test-feature',
+        value: true,
+        variants: [false, true],
+        metadata: { description: 'Test feature' },
+      }
+
+      const instance = new CanaryCore([['test-feature', entry]])
+      expect(instance.getFeature('test-feature')).toEqual({
+        ...entry,
+        name: 'test-feature',
+      })
+    })
+
     it('should merge existing configuration', () => {
       const initialEntry: CanaryStoreEntry = {
         name: 'test-feature',

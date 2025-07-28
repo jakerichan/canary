@@ -4,9 +4,12 @@ export interface CanaryStoreEntry {
   variants?: [true, false] | [false, true] | string[] | number[] | object[]
   override?: CanaryValue
   metadata?: {
-    description: string
+    source?: string
+    description?: string
   }
 }
+
+export type CanaryConfig = Array<CanaryStoreEntry> | Array<[string, CanaryStoreEntry]>
 
 export type CanaryValue = boolean | string | number | object | null | undefined
 export interface Overrides {
