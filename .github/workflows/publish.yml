@@ -21,6 +21,11 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: config git user
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
       - name: Release a new package
         run: yarn nx release
         env:
