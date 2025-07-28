@@ -1,3 +1,13 @@
+## 1.0.0-alpha.7 (2025-07-28)
+
+### 🩹 Fixes
+
+- **ci:** try adding yarn npm auth token ([1c8dd8d](https://github.com/jakerichan/canary/commit/1c8dd8d))
+
+### ❤️ Thank You
+
+- Jacob Richan @jakerichan
+
 ## 1.0.0-alpha.6 (2025-07-28)
 
 This was a version bump only for @canary-flags/core to align it with other projects, there were no code changes.
