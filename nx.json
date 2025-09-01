@@ -76,6 +76,9 @@
   },
   "release": {
     "releaseTagPatternStrictPreid": true,
+    "projects": [
+      "packages/*"
+    ],
     "version": {
       "conventionalCommits": true,
       "fallbackCurrentVersionResolver": "disk",
