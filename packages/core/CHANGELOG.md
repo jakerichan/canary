@@ -1,3 +1,14 @@
+## 1.0.0-alpha.8 (2025-09-01)
+
+### 🩹 Fixes
+
+- **ci:** run build before publish, try with npx ([1823188](https://github.com/jakerichan/canary-flags/commit/1823188))
+- **ci:** add npm token to yarn config ([eda2fde](https://github.com/jakerichan/canary-flags/commit/eda2fde))
+
+### ❤️ Thank You
+
+- Jacob Richan @jakerichan
+
 ## 1.0.0-alpha.7 (2025-07-28)
 
 ### 🩹 Fixes
