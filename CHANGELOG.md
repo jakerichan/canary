@@ -1,3 +1,7 @@
+## 1.0.0-alpha.10 (2025-09-01)
+
+This was a version bump only, there were no code changes.
+
 ## 1.0.0-alpha.9 (2025-09-01)
 
 This was a version bump only, there were no code changes.
