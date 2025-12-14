@@ -1,0 +1,13 @@
+{
+  "name": "@canary-flags/react-app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "tailwindcss": "4.1.18"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.1.18"
+  }
+}

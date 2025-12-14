@@ -5,6 +5,12 @@
   "references": [
     {
       "path": "./packages/core"
+    },
+    {
+      "path": "./examples/react-app"
+    },
+    {
+      "path": "./packages/react"
     }
   ]
 }

@@ -1,0 +1,35 @@
+import type { CanaryValue } from '@canary-flags/core'
+import { useEffect, useState } from 'react'
+import useCanaryCore from '../useCanaryCore'
+
+const useCanary = (flag: string) => {
+  const core = useCanaryCore()
+  const storedValue = core?.get(flag)
+  const [flagValue, setFlagValue] = useState<CanaryValue | null>(storedValue)
+
+  useEffect(() => {
+    if (storedValue !== flagValue) {
+      setFlagValue(storedValue)
+    }
+  }, [storedValue, flagValue])
+
+  useEffect(() => {
+    if (!core) return
+    const handleFlagChange = (value: CanaryValue) => {
+      console.log('handleFlagChange', flag, value, core)
+      setFlagValue(value)
+    }
+    core.on(`assign:${flag}`, handleFlagChange)
+    core.on(`override:${flag}`, handleFlagChange)
+
+    return () => {
+      core.off(`assign:${flag}`, handleFlagChange)
+      core.off(`override:${flag}`, handleFlagChange)
+    }
+  }, [core, flag])
+
+  console.log('useCanary return', flag, flagValue)
+  return flagValue
+}
+
+export default useCanary

@@ -1,0 +1,41 @@
+{
+  "name": "@canary-flags/react",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">18.0.0",
+    "react-dom": ">18.0.0"
+  },
+  "devDependencies": {
+    "cssnano": "^7.1.2",
+    "postcss": "8.4.38",
+    "postcss-import": "^16.1.1",
+    "postcss-load-config": "^6.0.1",
+    "postcss-nested": "^7.0.2",
+    "postcss-prefix-selector": "^2.1.1",
+    "postcss-preset-env": "^10.5.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
+  },
+  "dependencies": {
+    "@canary-flags/core": "workspace:*",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.561.0"
+  }
+}
