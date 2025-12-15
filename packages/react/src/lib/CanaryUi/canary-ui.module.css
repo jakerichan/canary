@@ -3,11 +3,12 @@
   top: 5vh;
   left: 2vw;
   z-index: var(--canary-z-index, 1000);
-
+  
   .container {
     color: var(--canary-bg-foreground-color, #000);
     background-color: var(--canary-bg-color, #eee);
     border-radius: 0.5rem;
+    border: 1px solid #999;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     min-width: 300px;
     max-height: 85vh;
@@ -47,10 +48,16 @@
     gap: 3px;
   }
 
+  .featureItem {
+    border-bottom: 1px solid #333;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
   .featureList {
     transition: all 0.3s ease-in;
     flex: 1;
-    padding: 1rem;
     max-height: calc(85vh - 4rem);
     
     &.featureListMinimized {
@@ -77,5 +84,17 @@
     &:hover {
       color: var(--canary-resize-handle-hover-color, rgba(0, 0, 0, 0.6));
     }
+  }
+  .searchContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+  .searchInput {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #333;
+    border-radius: 0.5rem;
   }
 }

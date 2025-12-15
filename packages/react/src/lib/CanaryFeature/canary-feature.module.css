@@ -1,0 +1,136 @@
+.feature {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  .name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex: 1;
+  }
+  
+  .source {
+    font-size: 0.8rem;
+    color: #666;
+    flex-shrink: 0;
+  }
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  width: 100%;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 0 0 0.5rem 0.5rem;
+  max-height: 0;
+  /* opacity: 0; */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+
+.metadata.expanded {
+  max-height: 500px;
+  /* opacity: 1; */
+  padding: 1rem;
+}
+
+.metadataEntry {
+  display: contents;
+}
+
+.metadataKey {
+  font-weight: 600;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.metadataValue {
+  color: #fff;
+}
+
+.hiddenCheckbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.checkboxButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.checkboxButton:hover {
+  opacity: 0.7;
+}
+
+.checkboxButton:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.selectInput {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 1px solid #333;
+  border-radius: 0.375rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23000000' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.selectInput:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.selectInput:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.selectInput option {
+  background-color: #333;
+  color: #fff;
+}

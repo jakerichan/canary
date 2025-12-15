@@ -1,7 +1,7 @@
 import { CanaryCore } from '@canary-flags/core'
 import CanaryFeature from '../CanaryFeature'
 import styles from './canary-ui.module.css'
-import { Minus, X } from 'lucide-react'
+import { Minus, Search, X } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useState, useRef } from 'react'
 import useDrag from './useDrag'
@@ -23,6 +23,12 @@ const CanaryUi = ({ core }: CanaryUiProps) => {
     },
   } = useResize(containerRef)
   const features = Object.entries(core.selections)
+  const [search, setSearch] = useState('')
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }
+
+  const filteredFeatures = features.filter(([name]) => name.includes(search))
 
   return (
     <div
@@ -39,7 +45,7 @@ const CanaryUi = ({ core }: CanaryUiProps) => {
         className={styles.container}
         style={{
           width: size ? `${size.width}px` : undefined,
-          height: size ? `${size.height}px` : undefined,
+          height: !minimized && size ? `${size.height}px` : undefined,
         }}
       >
         <header
@@ -62,6 +68,17 @@ const CanaryUi = ({ core }: CanaryUiProps) => {
             </button>
           </div>
         </header>
+        {!minimized && (
+          <label className={styles.searchContainer}>
+            <Search size={16} />
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="Search"
+              onChange={handleSearchChange}
+            />
+          </label>
+        )}
         <div className={
           clsx(styles.content, {
             [styles.minimized]: minimized,
@@ -73,8 +90,11 @@ const CanaryUi = ({ core }: CanaryUiProps) => {
               [styles.featureListMinimized]: minimized,
             })}
           >
-            {features.map(([name]) => (
-              <li key={name}>
+            {filteredFeatures.map(([name]) => (
+              <li
+                key={name}
+                className={styles.featureItem}
+              >
                 <CanaryFeature
                   name={name}
                   core={core}
@@ -83,12 +103,14 @@ const CanaryUi = ({ core }: CanaryUiProps) => {
             ))}
           </ul>
         </div>
-        <div
-          className={styles.resizeHandle}
-          onMouseDown={onResizeMouseDown}
-        >
-          <CornerGrip />
-        </div>
+        {!minimized && (
+          <div
+            className={styles.resizeHandle}
+            onMouseDown={onResizeMouseDown}
+          >
+            <CornerGrip />
+          </div>
+        )}
       </div>
     </div>
   )
