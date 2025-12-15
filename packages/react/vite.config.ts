@@ -25,11 +25,9 @@ export default defineConfig(() => ({
     outDir: './dist',
     emptyOutDir: true,
     reportCompressedSize: true,
+    cssCodeSplit: false,
     commonjsOptions: {
       transformMixedEsModules: true,
-    },
-    build: {
-      cssCodeSplit: false,
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.

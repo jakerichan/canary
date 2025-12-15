@@ -7,10 +7,10 @@
       "path": "./packages/core"
     },
     {
-      "path": "./examples/react-app"
+      "path": "./packages/react"
     },
     {
-      "path": "./packages/react"
-    }
+      "path": "./examples/react-app"
+    },
   ]
 }
