@@ -1,3 +1,7 @@
+## 1.0.0-prerelease.1 (2025-12-15)
+
+This was a version bump only for @canary-flags/react to align it with other projects, there were no code changes.
+
 ## 1.0.0-prerelease.0 (2025-12-15)
 
 ### 🚀 Features
