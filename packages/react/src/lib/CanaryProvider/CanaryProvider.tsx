@@ -51,10 +51,6 @@ const CanaryProvider = ({
     core.toggle = () => {
       setShowCanaryUi(value => !value)
     }
-
-    return () => {
-      core.destroy()
-    }
   }, [core, onEvaluateFlag])
 
   if (!core) return children
