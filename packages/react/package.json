@@ -1,6 +1,6 @@
 {
   "name": "@canary-flags/react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -38,7 +38,7 @@
     "react-dom": "19.2.1"
   },
   "dependencies": {
-    "@canary-flags/core": "1.0.0",
+    "@canary-flags/core": "1.0.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.561.0"
   }
