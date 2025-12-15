@@ -37,7 +37,12 @@ const CanaryProvider = ({
   const [showCanaryUi, setShowCanaryUi] = useState<boolean>(true)
   const [core, setCore] = useState<CanaryCore | null>(null)
   useEffect(() => {
-    setCore(new CanaryCore(canaryConfig))
+    const newCore = new CanaryCore(canaryConfig)
+    setCore(newCore)
+    
+    return () => {
+      newCore.destroy()
+    }
   }, [canaryConfig])
 
   useEffect(() => {
