@@ -20,8 +20,8 @@ const useResize = (containerRef: React.RefObject<HTMLDivElement | null>) => {
       const deltaY = e.clientY - resizeStart.y
 
       setSize({
-        width: Math.max(200, resizeStart.width + deltaX), // min-width: 300px
-        height: Math.max(100, resizeStart.height + deltaY), // min-height: 200px
+        width: Math.max(200, resizeStart.width + deltaX),
+        height: Math.max(100, resizeStart.height + deltaY),
       })
     }
 

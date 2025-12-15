@@ -30,14 +30,13 @@ const useHashOverride = (
   }, [core, hashName, clearHash])
 
   useEffect(() => {
+    applyHashOverride()
     globalThis.addEventListener('hashchange', applyHashOverride)
 
     return () => {
       globalThis.removeEventListener('hashchange', applyHashOverride)
     }
   }, [applyHashOverride])
-
-  applyHashOverride()
 }
 
 export default useHashOverride
