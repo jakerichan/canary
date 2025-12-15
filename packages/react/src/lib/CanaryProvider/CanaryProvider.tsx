@@ -59,7 +59,7 @@ const CanaryProvider = ({
     <CanaryContext.Provider value={core}>
       {children}
       {showCanaryUi && core && (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={null}>
           {renderCanaryUI(core)}
         </Suspense>
       )}
