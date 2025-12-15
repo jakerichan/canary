@@ -15,7 +15,6 @@ const CanaryFeature = ({ name, core }: CanaryFeatureProps) => {
   const [expanded, setExpanded] = useState(false)
   const currentValue = useCanary(name)
   const feature = core.getFeature(name)
-  console.log('feature', feature)
   const variants = feature?.variants || []
   const metadata = feature?.metadata || {}
   const metadataEntries = Object.entries(metadata)

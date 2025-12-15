@@ -13,12 +13,17 @@ const useGlobalCanary = <T extends typeof globalThis
     if (!canaryCore) return
     const propertyNameStr = String(propertyName)
     ;(globalThis as T)[propertyName] = canaryCore as T[keyof T]
-    const canaryStorage = localStorage.getItem(propertyNameStr)
+    const canaryStorage = storage.getItem(propertyNameStr)
     const canaryStorageObject = canaryStorage ? JSON.parse(canaryStorage) : {}
     canaryCore.on('change', (key, value) => {
+      // Read current state from storage to merge with new change
+      const currentStorage = storage.getItem(propertyNameStr)
+      const currentStorageObject = currentStorage
+        ? JSON.parse(currentStorage)
+        : {}
       storage.setItem(
         propertyNameStr,
-        JSON.stringify({ ...canaryStorageObject, [key]: value }),
+        JSON.stringify({ ...currentStorageObject, [key]: value }),
       )
     })
     canaryCore.on('reset', () => {

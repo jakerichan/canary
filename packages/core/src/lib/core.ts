@@ -14,7 +14,6 @@ const isKeyValueArray = (canaryConfig: CanaryConfig): canaryConfig is Array<[str
 class CanaryCore extends EventEmitter {
   constructor(canaryConfig?: CanaryConfig, overrides?: Overrides) {
     super()
-    // console.log('CanaryCore constructor', canaryConfig, overrides)
     if (canaryConfig) this.initializeConfig(canaryConfig)
     if (overrides) this.overrideValues(overrides)
   }
@@ -118,7 +117,6 @@ class CanaryCore extends EventEmitter {
     }
 
     canaryConfig.forEach((entry) => {
-      console.log('config', entry)
       this.config(entry.name, entry)
     })
     return this

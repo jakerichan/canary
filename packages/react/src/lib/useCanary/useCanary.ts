@@ -16,7 +16,6 @@ const useCanary = (flag: string) => {
   useEffect(() => {
     if (!core) return
     const handleFlagChange = (value: CanaryValue) => {
-      console.log('handleFlagChange', flag, value, core)
       setFlagValue(value)
     }
     core.on(`assign:${flag}`, handleFlagChange)
@@ -27,8 +26,6 @@ const useCanary = (flag: string) => {
       core.off(`override:${flag}`, handleFlagChange)
     }
   }, [core, flag])
-
-  console.log('useCanary return', flag, flagValue)
   return flagValue
 }
 

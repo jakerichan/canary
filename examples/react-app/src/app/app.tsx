@@ -1,4 +1,4 @@
-import { CanaryProvider, useGlobalCanary } from '@canary-flags/react'
+import { CanaryProvider, useGlobalCanary, useHashOverride } from '@canary-flags/react'
 import Feature from './Feature'
 
 const canaryConfig = [
@@ -50,6 +50,7 @@ export function App() {
 
 const GlobalCanary = () => {
   useGlobalCanary('canary')
+  useHashOverride('canary')
   return null
 }
 

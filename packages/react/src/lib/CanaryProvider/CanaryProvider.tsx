@@ -52,46 +52,10 @@ const CanaryProvider = ({
       setShowCanaryUi(value => !value)
     }
 
-    core.on('change', () => {
-      console.log('change')
-    })
-
     return () => {
       core.destroy()
     }
   }, [core, onEvaluateFlag])
-
-  useEffect(() => {
-    if (!core) return
-    // Change this to hash
-    // Add a listener for location changes
-    const searchParams = new URLSearchParams(globalThis.location.search)
-    // console.log('searchParams', searchParams)
-    const urlConfig = searchParams.get('canary') || '{}'
-    // console.log('urlConfig', urlConfig, JSON.parse(urlConfig))
-    try {
-      core.overrideValues(JSON.parse(urlConfig))
-    }
-    catch (error) {
-      console.error(error)
-    }
-  }, [core])
-
-  // useEffect(() => {
-  //   if (!core) return
-  //   window['canary-ui'] = core
-  //   const canaryStorage = localStorage.getItem(`canary`)
-  //   const canaryStorageObject = canaryStorage ? JSON.parse(canaryStorage) : {}
-  //   core.on('change', (key, value) => {
-  //     localStorage.setItem(`canary`, JSON.stringify({
-  //       ...canaryStorageObject, [key]: value,
-  //     }))
-  //   })
-  //   core.on('reset', () => {
-  //     localStorage.removeItem(`canary`)
-  //   })
-  //   core.overrideValues(canaryStorageObject)
-  // }, [core])
 
   if (!core) return children
   return (

@@ -20,4 +20,16 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
+  {
+    files: ['**/*.spec.{ts,tsx}'],
+    plugins: { 'react-hooks': reactHooks },
+    rules: {
+      '@stylistic/max-len': ['error', {
+        code: 120,
+        tabWidth: 2,
+        ignoreComments: true,
+        ignoreUrls: true,
+      }],
+    },
+  },
 ]
