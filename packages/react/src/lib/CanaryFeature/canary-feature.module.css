@@ -1,0 +1,142 @@
+/*
+ * Canary Feature Styles
+ * Uses semantic tokens defined in canary-ui.module.css
+ * Variables are inherited from the parent .canary scope
+ */
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  .name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex: 1;
+    color: var(--canary-foreground, oklch(0.145 0 0));
+  }
+  
+  .source {
+    font-size: 0.75rem;
+    color: var(--canary-muted-foreground, oklch(0.556 0 0));
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  width: 100%;
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  background-color: var(--canary-primary, oklch(0.205 0 0));
+  color: var(--canary-primary-foreground, oklch(0.985 0 0));
+  border-radius: 0 0 calc(var(--canary-radius, 0.625rem) - 2px) calc(var(--canary-radius, 0.625rem) - 2px);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+
+.metadata.expanded {
+  max-height: 500px;
+  padding: 0.75rem 1rem;
+}
+
+.metadataEntry {
+  display: contents;
+}
+
+.metadataKey {
+  font-weight: 600;
+  color: var(--canary-primary-foreground, oklch(0.985 0 0));
+  text-transform: capitalize;
+  opacity: 0.8;
+}
+
+.metadataValue {
+  color: var(--canary-primary-foreground, oklch(0.985 0 0));
+  word-break: break-word;
+}
+
+.hiddenCheckbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.checkboxButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--canary-foreground, oklch(0.145 0 0));
+  transition: opacity 0.15s ease;
+}
+
+.checkboxButton:hover {
+  opacity: 0.7;
+}
+
+.checkboxButton:focus-visible {
+  outline: 2px solid var(--canary-ring, oklch(0.708 0 0));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.selectInput {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 1px solid var(--canary-input, oklch(0.922 0 0));
+  border-radius: calc(var(--canary-radius, 0.625rem) - 2px);
+  background-color: var(--canary-background, oklch(1 0 0));
+  color: var(--canary-foreground, oklch(0.145 0 0));
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555555' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.selectInput:hover {
+  border-color: var(--canary-ring, oklch(0.708 0 0));
+}
+
+.selectInput:focus {
+  outline: none;
+  border-color: var(--canary-ring, oklch(0.708 0 0));
+  box-shadow: 0 0 0 2px oklch(0.708 0 0 / 20%);
+}
+
+.selectInput option {
+  background-color: var(--canary-popover, oklch(1 0 0));
+  color: var(--canary-popover-foreground, oklch(0.145 0 0));
+}

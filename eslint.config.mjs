@@ -17,6 +17,9 @@ export default [
   {
     ignores: [
       '**/dist',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
+      '**/test-output',
     ],
   },
   {
@@ -67,7 +70,7 @@ export default [
     },
   },
   {
-    files: ['packages/**/*.{ts,tsx}'],
+    files: ['packages/**/*.{ts,tsx}', 'examples/**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
         projectService: true,

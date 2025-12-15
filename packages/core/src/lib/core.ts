@@ -10,6 +10,7 @@ import type {
 const isKeyValueArray = (canaryConfig: CanaryConfig): canaryConfig is Array<[string, CanaryStoreEntry]> => {
   return Array.isArray(canaryConfig[0]) && typeof canaryConfig[0][0] === 'string'
 }
+
 class CanaryCore extends EventEmitter {
   constructor(canaryConfig?: CanaryConfig, overrides?: Overrides) {
     super()
@@ -62,11 +63,11 @@ class CanaryCore extends EventEmitter {
     return this._onEvaluateFlag
   }
 
-  private _onEvaluateFlag: (key: string, value: CanaryValue, config?: CanaryStoreEntry) => void = () => {
+  private _onEvaluateFlag: (key: string, config?: CanaryStoreEntry) => void = () => {
     console.warn('no onEvaluateFlag implemented for CanaryCore')
   }
 
-  set toggle(value) {
+  set toggle(value: () => void) {
     this._toggle = value
   }
 
@@ -88,6 +89,7 @@ class CanaryCore extends EventEmitter {
 
   public get = (key: string): CanaryValue => {
     const feature = this.getFeature(key)
+    if (this._hasOnEvaluateFlag) this.onEvaluateFlag(key, feature)
     return feature?.override ?? feature?.value
   }
 
@@ -131,9 +133,10 @@ class CanaryCore extends EventEmitter {
 
   public override = (key: string, value: CanaryValue): CanaryCore => {
     const config = this.features.get(key) || ({} as CanaryStoreEntry)
-
     this.set(key, { ...config, override: value })
+
     this.emit(`override:${key}`, value, this)
+    this.emit('override', key, value, this)
     this.emit('change', key, value, this)
 
     return this

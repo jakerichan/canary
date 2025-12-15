@@ -1,16 +1,16 @@
 {
   "name": "@canary-flags/core",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-prerelease.0",
   "type": "module",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "exports": {
     "./package.json": "./package.json",
