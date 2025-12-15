@@ -2,6 +2,9 @@
   "name": "@canary-flags/react",
   "version": "1.0.0-prerelease.0",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
