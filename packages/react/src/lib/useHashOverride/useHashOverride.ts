@@ -8,6 +8,7 @@ const useHashOverride = (
   const core = useCanaryCore()
 
   const applyHashOverride = useCallback(() => {
+    if (!core) return
     const locationHash = globalThis.location.hash.slice(1)
     if (!locationHash) return
     const hash = locationHash.split('&')
@@ -18,7 +19,7 @@ const useHashOverride = (
       const decodedUrlConfig = decodeURIComponent(
         decodeURIComponent(urlConfig),
       )
-      core?.overrideValues(JSON.parse(decodedUrlConfig))
+      core.overrideValues(JSON.parse(decodedUrlConfig))
       if (clearHash) {
         globalThis.location.hash = ''
       }
