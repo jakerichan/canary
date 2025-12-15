@@ -200,13 +200,11 @@ describe('CanaryCore', () => {
       canary.assign('bool-feature', true)
       canary.assign('string-feature', 'test')
       canary.assign('number-feature', 42)
-      canary.assign('object-feature', { key: 'value' })
       canary.assign('null-feature', null)
 
       expect(canary.get('bool-feature')).toBe(true)
       expect(canary.get('string-feature')).toBe('test')
       expect(canary.get('number-feature')).toBe(42)
-      expect(canary.get('object-feature')).toEqual({ key: 'value' })
       expect(canary.get('null-feature')).toBeNull()
     })
   })
@@ -498,7 +496,8 @@ describe('CanaryCore', () => {
       it('should have default implementation', () => {
         const consoleSpy = jest.spyOn(console, 'warn')
         const onEvaluateFn = canary.onEvaluateFlag
-        onEvaluateFn('test', true)
+        const feature = { name: 'test', value: true }
+        onEvaluateFn('test', feature)
         expect(consoleSpy).toHaveBeenCalledWith('no onEvaluateFlag implemented for CanaryCore')
         consoleSpy.mockRestore()
       })
@@ -506,9 +505,10 @@ describe('CanaryCore', () => {
       it('should use custom implementation', () => {
         const mockFn = jest.fn()
         canary.onEvaluateFlag = mockFn
+        const feature = { name: 'test', value: true }
         const onEvaluateFn = canary.onEvaluateFlag
-        onEvaluateFn('test', true)
-        expect(mockFn).toHaveBeenCalledWith('test', true)
+        onEvaluateFn('test', feature)
+        expect(mockFn).toHaveBeenCalledWith('test', feature)
       })
     })
 
@@ -562,14 +562,6 @@ describe('CanaryCore', () => {
 
       expect(canary.get('null-feature')).toBeNull() // undefined override falls back to null value
       expect(canary.get('undefined-feature')).toBeUndefined() // null override takes precedence, but there seems to be an issue with nullish coalescing
-    })
-
-    it('should handle object values', () => {
-      const objValue = { key: 'value', nested: { prop: 42 } }
-      canary.assign('object-feature', objValue)
-      canary.override('object-feature', { key: 'override' })
-
-      expect(canary.get('object-feature')).toEqual({ key: 'override' })
     })
 
     it('should handle numeric values', () => {

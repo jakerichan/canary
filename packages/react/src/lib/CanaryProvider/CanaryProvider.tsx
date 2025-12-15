@@ -3,29 +3,26 @@ import {
   CanaryConfig,
   CanaryCore,
   CanaryStoreEntry,
-  CanaryValue,
 } from '@canary-flags/core'
 import CanaryContext from './CanaryContext'
 
 interface CanaryProviderProps {
   children: React.ReactNode
+  /**
+   * Warning: canaryConfig is used as a dependency for the CanaryProvider component.
+   * Use an imported constant, or be sure to pass a memoized value to avoid unnecessary re-renders.
+   */
   canaryConfig: CanaryConfig
   parentCore?: CanaryCore
   renderCanaryUI?: (core: CanaryCore) => React.ReactNode
-  urlConfigParam?: string
   onEvaluateFlag?: (
     key: string,
-    value: CanaryValue,
     config?: CanaryStoreEntry
   ) => void
 }
 
 const LazyCanaryUi = lazy(() => import('../CanaryUi'))
-/**
- *
- * Features todo:
- * - provide a way to hook into localStorage (onOverride?)
- */
+
 const CanaryProvider = ({
   children,
   canaryConfig,
@@ -34,10 +31,14 @@ const CanaryProvider = ({
   onEvaluateFlag,
 }: CanaryProviderProps,
 ) => {
-  const [showCanaryUi, setShowCanaryUi] = useState<boolean>(true)
+  const [showCanaryUi, setShowCanaryUi] = useState<boolean>(false)
   const [core, setCore] = useState<CanaryCore | null>(null)
   useEffect(() => {
-    setCore(new CanaryCore(canaryConfig))
+    const newCore = new CanaryCore(canaryConfig)
+    setCore(newCore)
+    return () => {
+      newCore.destroy()
+    }
   }, [canaryConfig])
 
   useEffect(() => {
@@ -50,10 +51,6 @@ const CanaryProvider = ({
     if (onEvaluateFlag) core.onEvaluateFlag = onEvaluateFlag
     core.toggle = () => {
       setShowCanaryUi(value => !value)
-    }
-
-    return () => {
-      core.destroy()
     }
   }, [core, onEvaluateFlag])
 

@@ -102,6 +102,11 @@ canary.on('config:my-feature', (config) => {
   console.log('my-feature configuration updated:', config)
 })
 
+// Listen to any override
+canary.on('override', (key, value, instance) => {
+  console.log(`Feature ${key} changed to: ${value}`)
+})
+
 // Listen to all changes
 canary.on('change', (key, value, instance) => {
   console.log(`Feature ${key} changed to: ${value}`)
@@ -157,8 +162,8 @@ canary.merge(childCore)
 
 ```typescript
 // Set custom evaluation callback
-canary.onEvaluateFlag = (key, value, config) => {
-  console.log(`Feature ${key} evaluated:`, value)
+canary.onEvaluateFlag = (key, config) => {
+  console.log(`Feature ${key} evaluated:`, config?.value)
   // Custom logic here
 }
 
@@ -290,7 +295,7 @@ new CanaryCore(configArray?: CanaryStoreEntry[], overrides?: Overrides)
 
 ### Setters
 
-- `onEvaluateFlag: (key: string, value: CanaryValue, config?: CanaryStoreEntry) => void`
+- `onEvaluateFlag: (key: string, config?: CanaryStoreEntry) => void`
 - `toggle: () => void`
 
 ### Events

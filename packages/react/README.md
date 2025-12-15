@@ -68,15 +68,15 @@ A React context provider that initializes and manages the canary flags system.
 - `parentCore` (optional): `CanaryCore` - A parent CanaryCore instance to merge with
 - `renderCanaryUI` (optional): `(core: CanaryCore) => React.ReactNode` - Custom render function for the UI panel (defaults to the built-in `CanaryUi` component)
 - `urlConfigParam` (optional): `string` - URL parameter name for configuration overrides
-- `onEvaluateFlag` (optional): `(key: string, value: CanaryValue, config?: CanaryStoreEntry) => void` - Callback fired when a flag is evaluated
+- `onEvaluateFlag` (optional): `(key: string, feature?: CanaryStoreEntry) => void` - Callback fired when a flag is evaluated
 
 #### Example
 
 ```tsx
 <CanaryProvider
   canaryConfig={canaryConfig}
-  onEvaluateFlag={(key, value, config) => {
-    console.log('Flag evaluated:', key, value)
+  onEvaluateFlag={(key, feature) => {
+    console.log('Flag evaluated:', key, feature?.value)
     // Track flag usage in analytics
   }}
 >

@@ -124,7 +124,7 @@ describe('useGlobalCanary', () => {
 
       act(() => {
         if (coreInstance) {
-          coreInstance.assign('test-feature', true)
+          coreInstance.override('test-feature', true)
         }
       })
 
@@ -162,8 +162,8 @@ describe('useGlobalCanary', () => {
 
       act(() => {
         if (coreInstance) {
-          coreInstance.assign('feature-1', true)
-          coreInstance.assign('feature-2', 'updated')
+          coreInstance.override('feature-1', true)
+          coreInstance.override('feature-2', 'updated')
         }
       })
 
@@ -198,7 +198,7 @@ describe('useGlobalCanary', () => {
       // First, set a value
       act(() => {
         if (coreInstance) {
-          coreInstance.assign('test-feature', true)
+          coreInstance.override('test-feature', true)
         }
       })
 
@@ -240,7 +240,7 @@ describe('useGlobalCanary', () => {
 
       act(() => {
         if (coreInstance) {
-          coreInstance.assign('test-feature', true)
+          coreInstance.override('test-feature', true)
         }
       })
 
@@ -313,11 +313,11 @@ describe('useGlobalCanary', () => {
   })
 
   describe('event handling', () => {
-    it('should handle multiple change events correctly', async () => {
+    it('should handle multiple override events correctly', async () => {
       const feature: CanaryStoreEntry = {
         name: 'test-feature',
-        value: false,
-        variants: [false, true],
+        value: 'option-1',
+        variants: ['option-1', 'option-2', 'option-3'],
       }
 
       const { result } = renderHook(() => useGlobalCanary(), {
@@ -332,9 +332,8 @@ describe('useGlobalCanary', () => {
 
       act(() => {
         if (coreInstance) {
-          coreInstance.assign('test-feature', true)
-          coreInstance.assign('test-feature', false)
-          coreInstance.assign('test-feature', true)
+          coreInstance.override('test-feature', 'option-2')
+          coreInstance.override('test-feature', 'option-3')
         }
       })
 
@@ -343,7 +342,7 @@ describe('useGlobalCanary', () => {
         expect(stored).not.toBeNull()
         if (stored) {
           const parsed = JSON.parse(stored)
-          expect(parsed['test-feature']).toBe(true)
+          expect(parsed['test-feature']).toBe('option-3')
         }
       })
     })

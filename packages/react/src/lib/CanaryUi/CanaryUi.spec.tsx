@@ -342,7 +342,7 @@ describe('CanaryUi', () => {
 
       render(<CanaryUi core={core} />)
 
-      const container = screen.getByText('CanaryUi').closest('[class*="cui"]') as HTMLElement
+      const container = screen.getByText('CanaryUi').closest('[class*="canary"]') as HTMLElement
       expect(container).toBeTruthy()
       expect(container.style.left).toBe('100px')
       expect(container.style.top).toBe('200px')
@@ -487,7 +487,7 @@ describe('CanaryUi', () => {
 
       render(<CanaryUi core={core} />)
 
-      const container = screen.getByText('CanaryUi').closest('[class*="cui"]') as HTMLElement
+      const container = screen.getByText('CanaryUi').closest('[class*="canary"]') as HTMLElement
       expect(container).toBeTruthy()
       expect(container.style.left).toBe('')
       expect(container.style.top).toBe('')

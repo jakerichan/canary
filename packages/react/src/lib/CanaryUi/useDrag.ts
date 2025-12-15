@@ -2,8 +2,23 @@ import { useState, useEffect } from 'react'
 
 type Position = { x: number, y: number }
 
-const useDrag = (containerRef: React.RefObject<HTMLDivElement | null>) => {
-  const [position, setPosition] = useState<Position | null>(null)
+const useDrag = (
+  containerRef: React.RefObject<HTMLDivElement | null>,
+  savePosition?: boolean,
+) => {
+  const [position, setPosition] = useState<Position | null>(() => {
+    if (savePosition) {
+      const savedPosition = localStorage.getItem('canary-ui-position')
+      try {
+        return savedPosition ? JSON.parse(savedPosition) : null
+      }
+      catch (error) {
+        console.error('Error parsing canary-ui-position', error)
+        return null
+      }
+    }
+    return null
+  })
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
 
@@ -19,6 +34,9 @@ const useDrag = (containerRef: React.RefObject<HTMLDivElement | null>) => {
 
     const handleMouseUp = () => {
       setIsDragging(false)
+      if (savePosition) {
+        localStorage.setItem('canary-ui-position', JSON.stringify(position))
+      }
     }
 
     window.addEventListener('mousemove', handleMouseMove)
@@ -28,7 +46,7 @@ const useDrag = (containerRef: React.RefObject<HTMLDivElement | null>) => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
     }
-  }, [isDragging, dragOffset])
+  }, [isDragging, dragOffset, savePosition, position])
 
   const handleHeaderMouseDown = (e: React.MouseEvent<HTMLElement>) => {
     // Don't start dragging if clicking on a button

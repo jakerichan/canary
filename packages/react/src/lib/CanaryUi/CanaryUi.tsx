@@ -10,18 +10,27 @@ import CornerGrip from './CornerGrip'
 
 interface CanaryUiProps {
   core: CanaryCore
+  title?: string
+  savePosition?: boolean
 }
 
-const CanaryUi = ({ core }: CanaryUiProps) => {
+const CanaryUi = ({
+  core,
+  title = 'CanaryUi',
+  savePosition = true,
+}: CanaryUiProps) => {
   const [minimized, setMinimized] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { position, handlers: { onMouseDown } } = useDrag(containerRef)
+  const { position, handlers: { onMouseDown } } = useDrag(
+    containerRef,
+    savePosition,
+  )
   const {
     size,
     handlers: {
       onMouseDown: onResizeMouseDown,
     },
-  } = useResize(containerRef)
+  } = useResize(containerRef, savePosition)
   const features = Object.entries(core.selections)
   const [search, setSearch] = useState('')
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +41,7 @@ const CanaryUi = ({ core }: CanaryUiProps) => {
 
   return (
     <div
-      className={styles.cui}
+      className={styles.canary}
       ref={containerRef}
       style={{
         ...({
@@ -52,7 +61,7 @@ const CanaryUi = ({ core }: CanaryUiProps) => {
           className={styles.header}
           onMouseDown={onMouseDown}
         >
-          <h1>CanaryUi</h1>
+          <h3 className={styles.headerTitle}>{title}</h3>
           <div className={styles.headerActions}>
             <button
               className={styles.headerButton}

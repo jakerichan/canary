@@ -1,7 +1,7 @@
-/// <reference types='vitest' />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { peerDependencies } from './package.json'
+// import { analyzer } from 'vite-bundle-analyzer'
 import dts from 'vite-plugin-dts'
 import * as path from 'path'
 
@@ -14,13 +14,11 @@ export default defineConfig(() => ({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
     }),
+    // analyzer(),
   ],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
-  // Configuration for building your library.
-  // See: https://vitejs.dev/guide/build.html#library-mode
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  },
   build: {
     outDir: './dist',
     emptyOutDir: true,
@@ -30,16 +28,12 @@ export default defineConfig(() => ({
       transformMixedEsModules: true,
     },
     lib: {
-      // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
       name: '@canary-flags/react',
       fileName: 'index',
-      // Change this to the formats you want to support.
-      // Don't forget to update your package.json as well.
       formats: ['es' as const, 'cjs' as const],
     },
     rollupOptions: {
-      // External packages that should not be bundled into your library.
       external: Object.keys(peerDependencies),
       output: {
         globals: {

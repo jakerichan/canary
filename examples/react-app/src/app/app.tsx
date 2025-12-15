@@ -35,8 +35,8 @@ function App() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-slate-100">
       <CanaryProvider
-        onEvaluateFlag={(key, value, config) => {
-          console.log('evaluated flag', key, value, config)
+        onEvaluateFlag={(key, config) => {
+          console.log('evaluated flag', key, config)
         }}
         canaryConfig={canaryConfig}
       >

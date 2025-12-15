@@ -63,7 +63,7 @@ class CanaryCore extends EventEmitter {
     return this._onEvaluateFlag
   }
 
-  private _onEvaluateFlag: (key: string, value: CanaryValue, config?: CanaryStoreEntry) => void = () => {
+  private _onEvaluateFlag: (key: string, config?: CanaryStoreEntry) => void = () => {
     console.warn('no onEvaluateFlag implemented for CanaryCore')
   }
 
@@ -89,7 +89,7 @@ class CanaryCore extends EventEmitter {
 
   public get = (key: string): CanaryValue => {
     const feature = this.getFeature(key)
-    if (this._hasOnEvaluateFlag) this.onEvaluateFlag(key, feature?.value, feature)
+    if (this._hasOnEvaluateFlag) this.onEvaluateFlag(key, feature)
     return feature?.override ?? feature?.value
   }
 
@@ -136,6 +136,7 @@ class CanaryCore extends EventEmitter {
     this.set(key, { ...config, override: value })
 
     this.emit(`override:${key}`, value, this)
+    this.emit('override', key, value, this)
     this.emit('change', key, value, this)
 
     return this
