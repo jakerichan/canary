@@ -8,36 +8,6 @@ import useCanary from '../useCanary'
 // Mock the useCanary hook
 jest.mock('../useCanary')
 
-// Mock lucide-react icons
-jest.mock('lucide-react', () => {
-  return {
-    ChevronDown: ({ size }: { size: number }) => (
-      <div
-        data-testid="chevron-down"
-        data-size={size}
-      />
-    ),
-    ChevronRight: ({ size }: { size: number }) => (
-      <div
-        data-testid="chevron-right"
-        data-size={size}
-      />
-    ),
-    Square: ({ size }: { size: number }) => (
-      <div
-        data-testid="square-icon"
-        data-size={size}
-      />
-    ),
-    SquareCheck: ({ size }: { size: number }) => (
-      <div
-        data-testid="square-check-icon"
-        data-size={size}
-      />
-    ),
-  }
-})
-
 const mockUseCanary = useCanary as jest.MockedFunction<typeof useCanary>
 
 describe('CanaryFeature', () => {
@@ -88,9 +58,9 @@ describe('CanaryFeature', () => {
         />,
       )
 
-      // BooleanInput renders a checkbox button
-      const checkboxButton = screen.getByRole('button', { name: /check/i })
-      expect(checkboxButton).toBeTruthy()
+      // BooleanInput renders a checkbox
+      const checkbox = screen.getByRole('checkbox', { name: /Disabled/i })
+      expect(checkbox).toBeTruthy()
     })
 
     it('should render SelectInput for string features', () => {
@@ -152,7 +122,7 @@ describe('CanaryFeature', () => {
         />,
       )
 
-      const expandButton = screen.getByTestId('chevron-right')
+      const expandButton = screen.getByRole('button')
       expect(expandButton).toBeTruthy()
     })
 
@@ -183,7 +153,7 @@ describe('CanaryFeature', () => {
       expect(metadataContainer?.className).not.toContain('expanded')
 
       // Click to expand
-      const expandButton = screen.getByTestId('chevron-right')
+      const expandButton = screen.getByRole('button')
       fireEvent.click(expandButton)
 
       // Metadata should now be expanded - wait for state update
@@ -214,7 +184,7 @@ describe('CanaryFeature', () => {
         />,
       )
 
-      const expandButton = screen.getByTestId('chevron-right')
+      const expandButton = screen.getByRole('button')
 
       // Initially collapsed
       expect(expandButton).toBeTruthy()
@@ -225,15 +195,13 @@ describe('CanaryFeature', () => {
 
       // Expand
       fireEvent.click(expandButton)
-      expect(screen.getByTestId('chevron-down')).toBeTruthy()
       const expandedDescriptionElement = screen.getByText('description')
       const expandedMetadataEntry = expandedDescriptionElement.parentElement
       const expandedMetadataContainer = expandedMetadataEntry?.parentElement
       expect(expandedMetadataContainer?.className).toContain('expanded')
 
       // Collapse
-      fireEvent.click(screen.getByTestId('chevron-down'))
-      expect(screen.getByTestId('chevron-right')).toBeTruthy()
+      fireEvent.click(screen.getByRole('button'))
       const collapsedDescriptionElement = screen.getByText('description')
       const collapsedMetadataEntry = collapsedDescriptionElement.parentElement
       const collapsedMetadataContainer = collapsedMetadataEntry?.parentElement
@@ -258,8 +226,8 @@ describe('CanaryFeature', () => {
         />,
       )
 
-      const checkboxButton = screen.getByRole('button', { name: /check/i })
-      expect(checkboxButton).toBeTruthy()
+      const checkbox = screen.getByRole('checkbox', { name: /Disabled/i })
+      expect(checkbox).toBeTruthy()
     })
 
     it('should detect boolean feature with [true, false] variants', () => {
@@ -278,8 +246,8 @@ describe('CanaryFeature', () => {
         />,
       )
 
-      const checkboxButton = screen.getByRole('button', { name: /uncheck/i })
-      expect(checkboxButton).toBeTruthy()
+      const checkbox = screen.getByRole('checkbox', { name: /Enabled/i })
+      expect(checkbox).toBeTruthy()
     })
 
     it('should call core.override when boolean value changes', () => {
@@ -299,8 +267,8 @@ describe('CanaryFeature', () => {
         />,
       )
 
-      const checkboxButton = screen.getByRole('button', { name: /check/i })
-      fireEvent.click(checkboxButton)
+      const checkbox = screen.getByRole('checkbox', { name: /Disabled/i })
+      fireEvent.click(checkbox)
 
       expect(overrideSpy).toHaveBeenCalledWith('bool-feature', true)
     })
@@ -379,7 +347,7 @@ describe('CanaryFeature', () => {
       expect(screen.getByText('no-variants-feature')).toBeTruthy()
       // Should not render any input (neither boolean nor select) when variants is empty
       expect(screen.queryByRole('combobox')).not.toBeTruthy()
-      expect(screen.queryByRole('button', { name: /check/i })).not.toBeTruthy()
+      expect(screen.queryByRole('checkbox')).not.toBeTruthy()
     })
 
     it('should handle feature that does not exist in core', () => {
@@ -396,7 +364,7 @@ describe('CanaryFeature', () => {
       expect(screen.getByText('non-existent-feature')).toBeTruthy()
       // Should not render any input
       expect(screen.queryByRole('combobox')).not.toBeTruthy()
-      expect(screen.queryByRole('button', { name: /check/i })).not.toBeTruthy()
+      expect(screen.queryByRole('checkbox')).not.toBeTruthy()
     })
 
     it('should handle feature with empty metadata object', () => {
@@ -442,7 +410,7 @@ describe('CanaryFeature', () => {
       )
 
       // Expand to see metadata
-      fireEvent.click(screen.getByTestId('chevron-right'))
+      fireEvent.click(screen.getByRole('button'))
 
       // All metadata entries should be visible
       expect(screen.getByText('description')).toBeTruthy()
@@ -472,8 +440,8 @@ describe('CanaryFeature', () => {
       )
 
       // Should show checked state based on useCanary return value
-      const checkboxButton = screen.getByRole('button', { name: /uncheck/i })
-      expect(checkboxButton).toBeTruthy()
+      const checkbox = screen.getByRole('checkbox', { name: /Enabled/i })
+      expect(checkbox).toBeTruthy()
     })
   })
 
@@ -496,7 +464,7 @@ describe('CanaryFeature', () => {
 
       // Should render select, not boolean input
       expect(screen.getByRole('combobox')).toBeTruthy()
-      expect(screen.queryByRole('button', { name: /check/i })).not.toBeTruthy()
+      expect(screen.queryByRole('checkbox')).not.toBeTruthy()
     })
 
     it('should handle number variants as string select', () => {
@@ -518,7 +486,7 @@ describe('CanaryFeature', () => {
       // Number variants are not strings, so should not render select
       // The component only handles boolean and string variants
       expect(screen.queryByRole('combobox')).not.toBeTruthy()
-      expect(screen.queryByRole('button', { name: /check/i })).not.toBeTruthy()
+      expect(screen.queryByRole('checkbox')).not.toBeTruthy()
     })
   })
 })

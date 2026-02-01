@@ -30,30 +30,6 @@ jest.mock('../CanaryFeature', () => {
   ))
 })
 
-// Mock lucide-react icons
-jest.mock('lucide-react', () => {
-  return {
-    Minus: ({ size }: { size: number }) => (
-      <div
-        data-testid="minus-icon"
-        data-size={size}
-      />
-    ),
-    Search: ({ size }: { size: number }) => (
-      <div
-        data-testid="search-icon"
-        data-size={size}
-      />
-    ),
-    X: ({ size }: { size: number }) => (
-      <div
-        data-testid="x-icon"
-        data-size={size}
-      />
-    ),
-  }
-})
-
 // Mock CornerGrip
 jest.mock('./CornerGrip', () => {
   return jest.fn(() => <div data-testid="corner-grip" />)
@@ -101,8 +77,8 @@ describe('CanaryUi', () => {
       render(<CanaryUi core={core} />)
 
       expect(screen.getByText('CanaryUi')).toBeTruthy()
-      expect(screen.getByTestId('minus-icon')).toBeTruthy()
-      expect(screen.getByTestId('x-icon')).toBeTruthy()
+      expect(screen.getByTestId('minimize-button')).toBeInTheDocument()
+      expect(screen.getByTestId('close-button')).toBeInTheDocument()
     })
 
     it('should render search input when not minimized', () => {
@@ -110,7 +86,7 @@ describe('CanaryUi', () => {
 
       const searchInput = screen.getByPlaceholderText('Search')
       expect(searchInput).toBeTruthy()
-      expect(screen.getByTestId('search-icon')).toBeTruthy()
+      expect(screen.getByTestId('search-input')).toBeInTheDocument()
     })
 
     it('should render feature list when features exist', () => {
@@ -129,22 +105,22 @@ describe('CanaryUi', () => {
 
       render(<CanaryUi core={core} />)
 
-      expect(screen.getByTestId('canary-feature-feature-1')).toBeTruthy()
-      expect(screen.getByTestId('canary-feature-feature-2')).toBeTruthy()
+      expect(screen.getByTestId('canary-feature-feature-1')).toBeInTheDocument()
+      expect(screen.getByTestId('canary-feature-feature-2')).toBeInTheDocument()
     })
 
     it('should render empty feature list when no features exist', () => {
       render(<CanaryUi core={core} />)
 
       const featureList = screen.getByRole('list')
-      expect(featureList).toBeTruthy()
+      expect(featureList).toBeInTheDocument()
       expect(featureList.children).toHaveLength(0)
     })
 
     it('should render resize handle when not minimized', () => {
       render(<CanaryUi core={core} />)
 
-      expect(screen.getByTestId('corner-grip')).toBeTruthy()
+      expect(screen.getByTestId('corner-grip')).toBeInTheDocument()
     })
   })
 
@@ -152,51 +128,51 @@ describe('CanaryUi', () => {
     it('should hide search input when minimized', () => {
       render(<CanaryUi core={core} />)
 
-      const minimizeButton = screen.getByTestId('minus-icon').closest('button')
-      expect(minimizeButton).toBeTruthy()
+      const minimizeButton = screen.getByTestId('minimize-button')
+      expect(minimizeButton).toBeInTheDocument()
       if (!minimizeButton) return
 
       fireEvent.click(minimizeButton)
 
-      expect(screen.queryByPlaceholderText('Search')).not.toBeTruthy()
-      expect(screen.queryByTestId('search-icon')).not.toBeTruthy()
+      expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('search-input')).not.toBeInTheDocument()
     })
 
     it('should hide resize handle when minimized', () => {
       render(<CanaryUi core={core} />)
 
-      const minimizeButton = screen.getByTestId('minus-icon').closest('button')
-      expect(minimizeButton).toBeTruthy()
+      const minimizeButton = screen.getByTestId('minimize-button')
+      expect(minimizeButton).toBeInTheDocument()
       if (!minimizeButton) return
 
       fireEvent.click(minimizeButton)
 
-      expect(screen.queryByTestId('corner-grip')).not.toBeTruthy()
+      expect(screen.queryByTestId('corner-grip')).not.toBeInTheDocument()
     })
 
     it('should toggle minimize state when minimize button is clicked', () => {
       render(<CanaryUi core={core} />)
 
-      const minimizeButton = screen.getByTestId('minus-icon').closest('button')
-      expect(minimizeButton).toBeTruthy()
+      const minimizeButton = screen.getByTestId('minimize-button')
+      expect(minimizeButton).toBeInTheDocument()
       if (!minimizeButton) return
 
       // Initially not minimized
-      expect(screen.getByPlaceholderText('Search')).toBeTruthy()
+      expect(screen.getByPlaceholderText('Search')).toBeInTheDocument()
 
       // Click to minimize
       fireEvent.click(minimizeButton)
-      expect(screen.queryByPlaceholderText('Search')).not.toBeTruthy()
+      expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
 
       // Click again to restore
       fireEvent.click(minimizeButton)
-      expect(screen.getByPlaceholderText('Search')).toBeTruthy()
+      expect(screen.getByPlaceholderText('Search')).toBeInTheDocument()
     })
 
     it('should apply minimized class to content when minimized', () => {
       render(<CanaryUi core={core} />)
 
-      const minimizeButton = screen.getByTestId('minus-icon').closest('button')
+      const minimizeButton = screen.getByTestId('minimize-button')
       const content = screen.getByRole('list').parentElement
       if (!minimizeButton) return
 
@@ -215,8 +191,8 @@ describe('CanaryUi', () => {
 
       render(<CanaryUi core={core} />)
 
-      const closeButton = screen.getByTestId('x-icon').closest('button')
-      expect(closeButton).toBeTruthy()
+      const closeButton = screen.getByTestId('close-button')
+      expect(closeButton).toBeInTheDocument()
       if (!closeButton) return
 
       fireEvent.click(closeButton)
@@ -404,7 +380,7 @@ describe('CanaryUi', () => {
 
       render(<CanaryUi core={core} />)
 
-      const minimizeButton = screen.getByTestId('minus-icon').closest('button')
+      const minimizeButton = screen.getByTestId('minimize-button')
       if (!minimizeButton) return
       fireEvent.click(minimizeButton)
 

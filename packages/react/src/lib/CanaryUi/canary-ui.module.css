@@ -1,6 +1,7 @@
 /*
- * Canary UI Theme Variables (ShadCN-aligned, Light mode)
- * Override these at :root or a parent element to customize the theme.
+ * Canary UI Theme Variables (ShadCN-aligned)
+ * Automatically switches between light/dark based on browser preference.
+ * Override variables via a parent wrapper element or inline styles.
  */
 .canary {
   /* Core semantic tokens */
@@ -167,5 +168,30 @@
       border-color: var(--canary-ring);
       box-shadow: 0 0 0 2px oklch(0.708 0 0 / 20%);
     }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .canary {
+    --canary-background: oklch(0.145 0 0);
+    --canary-foreground: oklch(0.985 0 0);
+    --canary-card: oklch(0.145 0 0);
+    --canary-card-foreground: oklch(0.985 0 0);
+    --canary-popover: oklch(0.145 0 0);
+    --canary-popover-foreground: oklch(0.985 0 0);
+    --canary-primary: oklch(0.985 0 0);
+    --canary-primary-foreground: oklch(0.205 0 0);
+    --canary-secondary: oklch(0.269 0 0);
+    --canary-secondary-foreground: oklch(0.985 0 0);
+    --canary-muted: oklch(0.269 0 0);
+    --canary-muted-foreground: oklch(0.708 0 0);
+    --canary-accent: oklch(0.269 0 0);
+    --canary-accent-foreground: oklch(0.985 0 0);
+    --canary-destructive: oklch(0.396 0.141 25.723);
+    --canary-border: oklch(0.269 0 0);
+    --canary-input: oklch(0.269 0 0);
+    --canary-ring: oklch(0.556 0 0);
+    --canary-shadow: 0 4px 12px oklch(0 0 0 / 25%);
+    --canary-shadow-sm: 0 1px 3px oklch(0 0 0 / 15%);
   }
 }

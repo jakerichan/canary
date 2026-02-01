@@ -63,11 +63,10 @@ A React context provider that initializes and manages the canary flags system.
 
 #### Props
 
-- `canaryConfig` (required): `CanaryConfig` - An array of feature flag configurations
+- `canaryConfig` (required): `CanaryConfig` - An array of feature flag configurations. **Note:** This value is used as a dependency, so use an imported constant or memoized value to avoid unnecessary re-renders.
 - `children` (required): `React.ReactNode` - Your application components
 - `parentCore` (optional): `CanaryCore` - A parent CanaryCore instance to merge with
 - `renderCanaryUI` (optional): `(core: CanaryCore) => React.ReactNode` - Custom render function for the UI panel (defaults to the built-in `CanaryUi` component)
-- `urlConfigParam` (optional): `string` - URL parameter name for configuration overrides
 - `onEvaluateFlag` (optional): `(key: string, feature?: CanaryStoreEntry) => void` - Callback fired when a flag is evaluated
 
 #### Example
@@ -182,6 +181,90 @@ function App() {
 }
 ```
 
+### `CanaryFeature`
+
+A React component that renders a single feature flag with its controls and metadata. This component is used internally by `CanaryUi` but can also be used standalone for custom UI implementations.
+
+#### Props
+
+- `name` (required): `string` - The name of the feature flag to display
+- `core` (required): `CanaryCore` - The CanaryCore instance to use
+
+#### Example
+
+```tsx
+import { CanaryFeature, useCanaryCore } from '@canary-flags/react'
+
+function CustomFeaturePanel() {
+  const core = useCanaryCore()
+  
+  if (!core) return null
+  
+  return (
+    <div>
+      <CanaryFeature name="my-feature" core={core} />
+    </div>
+  )
+}
+```
+
+### `CanaryUi`
+
+A draggable, resizable UI panel for managing feature flags at runtime. This component is rendered by default when using `CanaryProvider`, but can also be used standalone or customized.
+
+#### Props
+
+- `core` (required): `CanaryCore` - The CanaryCore instance to use
+- `title` (optional): `string` - The title displayed in the panel header (default: `'CanaryUi'`)
+- `savePosition` (optional): `boolean` - Whether to persist position and size to localStorage (default: `true`)
+- `renderFeature` (optional): `(feature: [string, CanaryValue], index: number, array: [string, CanaryValue][]) => React.ReactNode` - Custom render function for each feature item
+
+#### Features
+
+- **Drag and resize** - Reposition and resize the panel, with optional persistence
+- **Search/filter** - Filter flags by name
+- **Reset button** - Reset all overrides to their default values
+- **Minimize/close** - Minimize or close the panel
+- **Dark mode support** - Automatically adapts to the user's system preference via `prefers-color-scheme`
+
+#### Example
+
+```tsx
+import { CanaryUi, useCanaryCore } from '@canary-flags/react'
+
+function CustomPanel() {
+  const core = useCanaryCore()
+  
+  if (!core) return null
+  
+  return (
+    <CanaryUi
+      core={core}
+      title="Feature Flags"
+      savePosition={false}
+    />
+  )
+}
+```
+
+#### Custom Feature Rendering
+
+Use the `renderFeature` prop to customize how each feature is displayed:
+
+```tsx
+<CanaryUi
+  core={core}
+  renderFeature={([name, value], index) => (
+    <li key={name}>
+      <span>{name}: {String(value)}</span>
+      <button onClick={() => core.override(name, !value)}>
+        Toggle
+      </button>
+    </li>
+  )}
+/>
+```
+
 ## Configuration Format
 
 The `canaryConfig` prop accepts an array of feature flag entries. Each entry has the following structure:
@@ -252,8 +335,11 @@ interface Metadata {
 import { 
   CanaryProvider, 
   useCanary, 
+  useCanaryCore,
   useGlobalCanary, 
-  useHashOverride 
+  useHashOverride,
+  CanaryFeature,
+  CanaryUi,
 } from '@canary-flags/react'
 
 const canaryConfig = [
@@ -322,14 +408,50 @@ By default, `CanaryProvider` renders a draggable, resizable UI panel (`CanaryUi`
 - Toggle boolean flags
 - Select values for flags with variants
 - Search and filter flags
-- View flag metadata
+- View flag metadata (expandable per feature)
+- Reset all overrides to defaults
 - Minimize or close the panel
 
+The UI automatically supports **dark mode** based on the user's system preference (`prefers-color-scheme`). Theme colors can be customized by overriding CSS custom properties on a parent element.
+
 The UI can be toggled programmatically using `core.toggle()` or customized by providing a `renderCanaryUI` prop.
+
+### Customizing the UI
+
+You can provide a custom `renderCanaryUI` function to use your own UI component:
+
+```tsx
+<CanaryProvider
+  canaryConfig={canaryConfig}
+  renderCanaryUI={(core) => <MyCustomPanel core={core} />}
+>
+  <App />
+</CanaryProvider>
+```
 
 ## TypeScript Support
 
 This package is written in TypeScript and includes full type definitions. All exports are properly typed, and the configuration format is type-safe.
+
+### Exported Types
+
+The package re-exports all types from `@canary-flags/core` and provides additional component prop types:
+
+```typescript
+import type {
+  // Core types (re-exported from @canary-flags/core)
+  CanaryConfig,
+  CanaryCore,
+  CanaryStoreEntry,
+  CanaryValue,
+  Metadata,
+  Overrides,
+  // Component prop types
+  CanaryProviderProps,
+  CanaryFeatureProps,
+  CanaryUiProps,
+} from '@canary-flags/react'
+```
 
 ## Requirements
 

@@ -7,7 +7,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import { clsx } from 'clsx'
 
-interface CanaryFeatureProps {
+export interface CanaryFeatureProps {
   name: string
   core: CanaryCore
 }
@@ -22,7 +22,6 @@ const CanaryFeature = ({ name, core }: CanaryFeatureProps) => {
   const isBoolean = variants.length === 2
     && variants.some(variant => typeof variant === 'boolean')
   const isString = variants.length > 0 && typeof variants[0] === 'string'
-
   return (
     <div className={styles.feature}>
       <div className={styles.details}>
@@ -31,9 +30,7 @@ const CanaryFeature = ({ name, core }: CanaryFeatureProps) => {
             {expanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
           </button>
         )}
-        <label
-          className={styles.label}
-        >
+        <label className={styles.label}>
           <div className={styles.name}>
             {name}
           </div>

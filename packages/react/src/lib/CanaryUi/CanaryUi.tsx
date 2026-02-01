@@ -1,23 +1,29 @@
-import { CanaryCore } from '@canary-flags/core'
+import { CanaryCore, CanaryValue } from '@canary-flags/core'
 import CanaryFeature from '../CanaryFeature'
 import styles from './canary-ui.module.css'
-import { Minus, Search, X } from 'lucide-react'
+import { Minus, RefreshCcw, Search, X } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useState, useRef } from 'react'
 import useDrag from './useDrag'
 import useResize from './useResize'
 import CornerGrip from './CornerGrip'
 
-interface CanaryUiProps {
+export interface CanaryUiProps {
   core: CanaryCore
   title?: string
   savePosition?: boolean
+  renderFeature?: (
+    feature: [string, CanaryValue],
+    index: number,
+    array: [string, CanaryValue][]
+  ) => React.ReactNode
 }
 
 const CanaryUi = ({
   core,
   title = 'CanaryUi',
   savePosition = true,
+  renderFeature,
 }: CanaryUiProps) => {
   const [minimized, setMinimized] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -64,12 +70,21 @@ const CanaryUi = ({
           <h3 className={styles.headerTitle}>{title}</h3>
           <div className={styles.headerActions}>
             <button
+              data-testid="reset-button"
+              className={styles.headerButton}
+              onClick={() => core.reset()}
+            >
+              <RefreshCcw size={16} />
+            </button>
+            <button
+              data-testid="minimize-button"
               className={styles.headerButton}
               onClick={() => setMinimized(m => !m)}
             >
               <Minus size={16} />
             </button>
             <button
+              data-testid="close-button"
               className={styles.headerButton}
               onClick={() => core.toggle()}
             >
@@ -85,6 +100,7 @@ const CanaryUi = ({
               className={styles.searchInput}
               placeholder="Search"
               onChange={handleSearchChange}
+              data-testid="search-input"
             />
           </label>
         )}
@@ -99,17 +115,19 @@ const CanaryUi = ({
               [styles.featureListMinimized]: minimized,
             })}
           >
-            {filteredFeatures.map(([name]) => (
-              <li
-                key={name}
-                className={styles.featureItem}
-              >
-                <CanaryFeature
-                  name={name}
-                  core={core}
-                />
-              </li>
-            ))}
+            {filteredFeatures.map(renderFeature
+              ? renderFeature
+              : ([name]) => (
+                  <li
+                    key={name}
+                    className={styles.featureItem}
+                  >
+                    <CanaryFeature
+                      name={name}
+                      core={core}
+                    />
+                  </li>
+                ))}
           </ul>
         </div>
         {!minimized && (

@@ -2,9 +2,9 @@
 
 A powerful feature flag and configuration management library for JavaScript/TypeScript applications.
 
-## 🚀 Core Package
+## Core Package
 
-The main package provides a flexible, event-driven system for managing feature flags, configuration values, and runtime overrides.
+The main package provides a flexible, event-driven system for managing feature flags, configuration values, and runtime overrides. See the [full documentation](./packages/core/README.md) for API reference and examples.
 
 ### Key Features
 
@@ -40,30 +40,68 @@ canary.override('new-feature', false)
 const value = canary.get('new-feature') // false
 ```
 
-## 📚 Documentation
+## React Package
+
+For React applications, use `@canary-flags/react` which provides components and hooks for seamless integration. See the [full documentation](./packages/react/README.md) for API reference and examples.
+
+```bash
+npm install @canary-flags/react
+# or
+yarn add @canary-flags/react
+```
+
+```tsx
+import { CanaryProvider, useCanary } from '@canary-flags/react'
+
+const canaryConfig = [
+  { name: 'new-feature', value: false }
+]
+
+function App() {
+  return (
+    <CanaryProvider canaryConfig={canaryConfig}>
+      <MyComponent />
+    </CanaryProvider>
+  )
+}
+
+function MyComponent() {
+  const isEnabled = useCanary('new-feature')
+  return <div>{isEnabled ? 'Feature enabled!' : 'Feature disabled'}</div>
+}
+```
+
+## Documentation
 
 For comprehensive documentation, examples, and API reference, see:
 
-**[📖 Core Package Documentation](./packages/core/README.md)**
+- **[Core Package Documentation](./packages/core/README.md)**
+- **[React Package Documentation](./packages/react/README.md)**
 
-## 🧪 Testing
+## Testing
 
 ```bash
-# Run all tests
-yarn nx test core
+# Run tests for all affected packages
+yarn test
 
-# Build the library
+# Run tests for a specific package
+yarn nx test core
+yarn nx test react
+
+# Build the libraries
 yarn nx build core
+yarn nx build react
 ```
 
-## 📦 Packages
+## Packages
 
 - **`@canary-flags/core`** - Core feature flag management library
+- **`@canary-flags/react`** - React components and hooks for feature flag management
 
-## 🤝 Contributing
+## Contributing
 
 This project uses [Nx](https://nx.dev) for monorepo management. See the [Nx documentation](https://nx.dev) for more information about the workspace setup.
 
-## 📄 License
+## License
 
 MIT

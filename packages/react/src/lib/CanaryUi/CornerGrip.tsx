@@ -1,7 +1,7 @@
 const CornerGrip = () => {
   return (
     <svg
-      fill="#000000"
+      fill="currentColor"
       viewBox="0 0 36 36"
     >
       <g

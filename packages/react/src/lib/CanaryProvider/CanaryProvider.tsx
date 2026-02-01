@@ -6,7 +6,7 @@ import {
 } from '@canary-flags/core'
 import CanaryContext from './CanaryContext'
 
-interface CanaryProviderProps {
+export interface CanaryProviderProps {
   children: React.ReactNode
   /**
    * Warning: canaryConfig is used as a dependency for the CanaryProvider component.
