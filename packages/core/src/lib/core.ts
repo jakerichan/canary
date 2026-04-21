@@ -7,7 +7,7 @@ import type {
   CanaryConfig,
 } from './types'
 
-const isKeyValueArray = (canaryConfig: CanaryConfig): canaryConfig is Array<[string, CanaryStoreEntry]> => {
+const isKeyValueArray = (canaryConfig: CanaryConfig): canaryConfig is ReadonlyArray<[string, CanaryStoreEntry]> => {
   return Array.isArray(canaryConfig[0]) && typeof canaryConfig[0][0] === 'string'
 }
 

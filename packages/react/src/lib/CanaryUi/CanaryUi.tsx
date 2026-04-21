@@ -43,7 +43,9 @@ const CanaryUi = ({
     setSearch(e.target.value)
   }
 
-  const filteredFeatures = features.filter(([name]) => name.includes(search))
+  const filteredFeatures = features.filter(
+    ([name]) => name.toLowerCase().includes(search.toLowerCase()),
+  )
 
   return (
     <div
@@ -57,7 +59,7 @@ const CanaryUi = ({
       }}
     >
       <div
-        className={styles.container}
+        className={`canary-ui ${styles.container}`}
         style={{
           width: size ? `${size.width}px` : undefined,
           height: !minimized && size ? `${size.height}px` : undefined,
