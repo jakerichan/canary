@@ -93,6 +93,7 @@
   },
   "release": {
     "releaseTagPatternStrictPreid": true,
+    "releaseTagPattern": "v${version}",
     "projects": [
       "packages/*"
     ],
@@ -102,6 +103,7 @@
       "preVersionCommand": "npx nx affected -t build"
     },
     "changelog": {
+      "automaticFromRefs": true,
       "projectChangelogs": {
         "renderOptions": {
           "authors": true,
