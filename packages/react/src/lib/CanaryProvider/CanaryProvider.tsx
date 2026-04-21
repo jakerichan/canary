@@ -54,7 +54,6 @@ const CanaryProvider = ({
     }
   }, [core, onEvaluateFlag])
 
-  if (!core) return children
   return (
     <CanaryContext.Provider value={core}>
       {children}
