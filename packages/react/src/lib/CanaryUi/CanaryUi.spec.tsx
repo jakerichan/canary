@@ -268,7 +268,7 @@ describe('CanaryUi', () => {
       expect(screen.getByTestId('canary-feature-feature-beta')).toBeTruthy()
     })
 
-    it('should filter case-sensitively', () => {
+    it('should filter case-insensitively', () => {
       const feature1: CanaryStoreEntry = {
         name: 'Feature-Alpha',
         value: false,
@@ -286,15 +286,18 @@ describe('CanaryUi', () => {
 
       const searchInput = screen.getByPlaceholderText('Search')
 
-      // Search for "Feature" (capital F)
+      // Matches both names (substring "feature" compared case-insensitively)
       fireEvent.change(searchInput, { target: { value: 'Feature' } })
       expect(screen.getByTestId('canary-feature-Feature-Alpha')).toBeTruthy()
-      expect(screen.queryByTestId('canary-feature-feature-beta')).not.toBeTruthy()
+      expect(screen.getByTestId('canary-feature-feature-beta')).toBeTruthy()
 
-      // Search for "feature" (lowercase f)
-      fireEvent.change(searchInput, { target: { value: 'feature' } })
+      fireEvent.change(searchInput, { target: { value: 'beta' } })
       expect(screen.queryByTestId('canary-feature-Feature-Alpha')).not.toBeTruthy()
       expect(screen.getByTestId('canary-feature-feature-beta')).toBeTruthy()
+
+      fireEvent.change(searchInput, { target: { value: 'Alpha' } })
+      expect(screen.getByTestId('canary-feature-Feature-Alpha')).toBeTruthy()
+      expect(screen.queryByTestId('canary-feature-feature-beta')).not.toBeTruthy()
     })
   })
 
@@ -316,12 +319,12 @@ describe('CanaryUi', () => {
         },
       })
 
-      render(<CanaryUi core={core} />)
+      const { container } = render(<CanaryUi core={core} />)
 
-      const container = screen.getByText('CanaryUi').closest('[class*="canary"]') as HTMLElement
-      expect(container).toBeTruthy()
-      expect(container.style.left).toBe('100px')
-      expect(container.style.top).toBe('200px')
+      const root = container.firstElementChild as HTMLElement
+      expect(root).toBeTruthy()
+      expect(root.style.left).toBe('100px')
+      expect(root.style.top).toBe('200px')
     })
 
     it('should attach drag handler to header', () => {
@@ -461,12 +464,12 @@ describe('CanaryUi', () => {
         },
       })
 
-      render(<CanaryUi core={core} />)
+      const { container } = render(<CanaryUi core={core} />)
 
-      const container = screen.getByText('CanaryUi').closest('[class*="canary"]') as HTMLElement
-      expect(container).toBeTruthy()
-      expect(container.style.left).toBe('')
-      expect(container.style.top).toBe('')
+      const root = container.firstElementChild as HTMLElement
+      expect(root).toBeTruthy()
+      expect(root.style.left).toBe('')
+      expect(root.style.top).toBe('')
     })
 
     it('should handle size being null', () => {
