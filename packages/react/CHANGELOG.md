@@ -1,3 +1,17 @@
+## 1.1.0 (2026-04-21)
+
+### 🚀 Features
+
+- clean up support for react 18 and 19 ([cd8d6f8](https://github.com/jakerichan/canary-flags/commit/cd8d6f8))
+
+### 🩹 Fixes
+
+- repair unit tests ([0e9be0e](https://github.com/jakerichan/canary-flags/commit/0e9be0e))
+
+### ❤️ Thank You
+
+- Jacob Richan @jakerichan
+
 ## 1.0.7 (2026-04-21)
 
 This was a version bump only for @canary-flags/react to align it with other projects, there were no code changes.
