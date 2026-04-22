@@ -105,6 +105,9 @@ class CanaryCore extends EventEmitter {
 
     this.set(key, mergedEntry)
     this.emit(`config:${key}`, mergedEntry)
+    if (existingEntry.value !== mergedEntry.value) {
+      this.emit('change', key, mergedEntry.value, this)
+    }
 
     return this
   }
@@ -119,6 +122,7 @@ class CanaryCore extends EventEmitter {
     canaryConfig.forEach((entry) => {
       this.config(entry.name, entry)
     })
+    this.emit('change:bulk', this)
     return this
   }
 
@@ -127,7 +131,9 @@ class CanaryCore extends EventEmitter {
     if (feature && value === feature.value) return this
     this.set(key, { ...feature, name: key, value })
     this.emit(`assign:${key}`, value, this)
-    this.emit('change', key, value, this)
+    if (feature?.value !== value) {
+      this.emit('change', key, value, this)
+    }
     return this
   }
 
@@ -137,7 +143,9 @@ class CanaryCore extends EventEmitter {
 
     this.emit(`override:${key}`, value, this)
     this.emit('override', key, value, this)
-    this.emit('change', key, value, this)
+    if (config.override !== value) {
+      this.emit('change', key, value, this)
+    }
 
     return this
   }

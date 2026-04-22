@@ -107,14 +107,14 @@ canary.on('override', (key, value, instance) => {
   console.log(`Feature ${key} changed to: ${value}`)
 })
 
-// Listen to all changes
+// Listen to effective value changes
 canary.on('change', (key, value, instance) => {
   console.log(`Feature ${key} changed to: ${value}`)
 })
 
-// Listen to bulk changes
+// Listen to bulk/catch-all changes
 canary.on('change:bulk', (instance) => {
-  console.log('Multiple features changed')
+  console.log('Refresh from core state')
 })
 
 // Listen to reset events
@@ -190,12 +190,6 @@ canary.assign('string-feature', 'enabled')
 
 // Numeric values
 canary.assign('numeric-feature', 42)
-
-// Object values
-canary.assign('object-feature', { 
-  mode: 'advanced', 
-  settings: { timeout: 5000 } 
-})
 
 // Null and undefined
 canary.assign('null-feature', null)
@@ -303,8 +297,8 @@ new CanaryCore(configArray?: CanaryStoreEntry[], overrides?: Overrides)
 - `assign:${key}` - Emitted when a feature is assigned
 - `override:${key}` - Emitted when a feature is overridden
 - `config:${key}` - Emitted when a feature configuration is updated
-- `change` - Emitted for any feature change
-- `change:bulk` - Emitted for bulk changes
+- `change` - Emitted when a feature's effective value changes
+- `change:bulk` - Emitted as a catch-all bulk/invalidation signal for operations that may affect multiple features
 - `reset` - Emitted when all overrides are reset
 
 ## TypeScript Types
@@ -313,14 +307,14 @@ new CanaryCore(configArray?: CanaryStoreEntry[], overrides?: Overrides)
 interface CanaryStoreEntry {
   name: string
   value: CanaryValue
-  variants?: [true, false] | [false, true] | string[] | number[] | object[]
+  variants?: [true, false] | [false, true] | string[] | number[]
   override?: CanaryValue
   metadata?: {
     description: string
   }
 }
 
-type CanaryValue = boolean | string | number | object | null | undefined
+type CanaryValue = boolean | string | number | null | undefined
 
 interface Overrides {
   [key: string]: CanaryValue

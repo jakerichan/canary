@@ -278,7 +278,7 @@ interface CanaryStoreEntry {
   metadata?: Metadata             // Optional: additional metadata
 }
 
-type CanaryValue = boolean | string | number | object | null | undefined
+type CanaryValue = boolean | string | number | null | undefined
 
 interface Metadata {
   source?: string

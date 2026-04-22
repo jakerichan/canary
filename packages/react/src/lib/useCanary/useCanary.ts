@@ -20,10 +20,12 @@ const useCanary = (flag: string) => {
     }
     core.on(`assign:${flag}`, handleFlagChange)
     core.on(`override:${flag}`, handleFlagChange)
+    core.on(`config:${flag}`, handleFlagChange)
 
     return () => {
       core.off(`assign:${flag}`, handleFlagChange)
       core.off(`override:${flag}`, handleFlagChange)
+      core.off(`config:${flag}`, handleFlagChange)
     }
   }, [core, flag])
   return flagValue
