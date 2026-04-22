@@ -1,3 +1,13 @@
+## 1.1.1 (2026-04-22)
+
+### 🩹 Fixes
+
+- make the change event more consistent and listen for config in useCanary ([38c1f45](https://github.com/jakerichan/canary-flags/commit/38c1f45))
+
+### ❤️ Thank You
+
+- Jacob Richan @jakerichan
+
 ## 1.1.0 (2026-04-21)
 
 ### 🚀 Features
