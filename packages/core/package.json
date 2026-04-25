@@ -2,6 +2,7 @@
   "name": "@canary-flags/core",
   "version": "1.1.1",
   "type": "module",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
