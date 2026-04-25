@@ -1,3 +1,7 @@
+## 1.1.2 (2026-04-25)
+
+This was a version bump only for @canary-flags/react to align it with other projects, there were no code changes.
+
 ## 1.1.1 (2026-04-22)
 
 ### 🩹 Fixes
