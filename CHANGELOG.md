@@ -1,3 +1,13 @@
+## 1.1.3 (2026-04-27)
+
+### 🩹 Fixes
+
+- **react:** externalize React peer subpaths in Vite build ([f6a8bae](https://github.com/jakerichan/canary-flags/commit/f6a8bae))
+
+### ❤️ Thank You
+
+- Jacob Richan @jakerichan
+
 ## 1.1.2 (2026-04-25)
 
 This was a version bump only, there were no code changes.
